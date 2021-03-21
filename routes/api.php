@@ -37,3 +37,5 @@ Route::post('/addPlant',[PlantController::class,'addPlant']);
 Route::post('/updatePlant',[PlantController::class,'updatePlant']);
 Route::post('/showPlant',[PlantController::class,'showPlant']);
 Route::post('/deletePlant',[PlantController::class,'deletePlant']);
+Route::post('/allPlants',[PlantController::class,'allPlants']);
+

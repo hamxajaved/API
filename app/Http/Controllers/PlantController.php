@@ -246,8 +246,35 @@ class PlantController extends Controller {
         return response()->json( [
 
             'status' => 'success',
-            'message' => 'Plant Updated Successfully',
             'plant' => $plants,
+
+        ], 200 );
+    }
+
+    // get all plant categories ...
+
+    public function allPlantcategories () {
+
+        $plantcategories =  DB::table( 'plantcategories' )->get();
+
+        return response()->json( [
+
+            'status' => 'success',
+            'plant' => $plantcategories,
+
+        ], 200 );
+    }
+
+    // get all plant types ...
+
+    public function allPlanttypes () {
+
+        $planttypes = DB::table( 'planttypes' )->get();
+
+        return response()->json( [
+
+            'status' => 'success',
+            'plant' => $planttypes,
 
         ], 200 );
     }

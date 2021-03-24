@@ -260,7 +260,7 @@ class PlantController extends Controller {
         return response()->json( [
 
             'status' => 'success',
-            'plant' => $plantcategories,
+            'plantCategories' => $plantcategories,
 
         ], 200 );
     }
@@ -274,7 +274,7 @@ class PlantController extends Controller {
         return response()->json( [
 
             'status' => 'success',
-            'plant' => $planttypes,
+            'plantTypes' => $planttypes,
 
         ], 200 );
     }

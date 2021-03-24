@@ -39,6 +39,6 @@ Route::post('/showPlant',[PlantController::class,'showPlant']);
 Route::post('/deletePlant',[PlantController::class,'deletePlant']);
 Route::post('/allPlants',[PlantController::class,'allPlants']);
 // plant categories and types
-Route::post('/categaries',[PlantController::class,'allPlantcategories']);
-Route::post('/types',[PlantController::class,'allPlanttypes']);
+Route::get('/categaries',[PlantController::class,'allPlantcategories']);
+Route::get('/types',[PlantController::class,'allPlanttypes']);
 

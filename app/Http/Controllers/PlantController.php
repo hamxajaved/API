@@ -20,7 +20,7 @@ class PlantController extends Controller {
 
             'name' => 'required',
             'price' => 'required',
-            'avatar' => 'required',
+            'avatar' => 'required|mimes:jpeg,jpg,png,gif|max:3000',
             'stock' => 'required',
             'plant_categories_id' => 'required',
             'plant_type_id' => 'required',

@@ -3,9 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\http\Controllers\UserController;
-use App\http\Controllers\PlantController;
-use App\http\Controllers\Api\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PlantController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,3 +45,11 @@ Route::post('/allPlants',[PlantController::class,'allPlants']);
 Route::get('/categaries',[PlantController::class,'allPlantcategories']);
 Route::get('/types',[PlantController::class,'allPlanttypes']);
 
+Route::post('add_to_cart',[CartController::class,'add_to_cart']);
+Route::post('show_cart',[CartController::class,'show_cart']);
+Route::post('delete_from_cart',[CartController::class,'delete_from_cart']);
+
+Route::post('add_order',[OrderController::class,'add_order']);
+Route::post('view_order',[OrderController::class,'view_order']);
+Route::post('delete_order',[OrderController::class,'delete_order']);
+Route::post('update_order',[OrderController::class,'update_order']);

@@ -14,6 +14,7 @@ class CreatePlantsTable extends Migration
     public function up()
     {
         Schema::create('plants', function (Blueprint $table) {
+            $table->id();
             $table->string('name')->nullable();
             $table->string('price')->nullable();
             $table->string('avatar')->nullable();

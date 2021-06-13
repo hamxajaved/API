@@ -226,12 +226,12 @@ class PlantController extends Controller {
 
     public function allPlants () {
 
-        $plants = Plant::paginate( 10 );
+        $data = Plant::paginate( 10 );
 
         return response()->json( [
 
             'status' => 'success',
-            'plant' => $plants,
+            'data' => $data,
 
         ], 200 );
     }

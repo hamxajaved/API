@@ -19,10 +19,8 @@ class CreatePlantsTable extends Migration
             $table->string('price')->nullable();
             $table->string('avatar')->nullable();
             $table->string('stock')->nullable();
-            $table->unsignedBigInteger('plant_categories_id');
-            $table->foreign('plant_categories_id')->references('id')->on('plantcategories')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
+            $table->string('description')->nullable();
+            $table->boolean('admin')->nullable();
             $table->unsignedBigInteger('plant_type_id');
             $table->foreign('plant_type_id')->references('id')->on('planttypes')
                     ->onUpdate('cascade')

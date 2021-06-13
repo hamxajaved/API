@@ -30,27 +30,27 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::delete('/logout',[UserController::class,'remove']);
 
 // Authentication Routes 
-Route::post('/register',[AuthController::class,'register']);
-Route::post('/login',[AuthController::class,'login']);
-Route::post('/logout',[AuthController::class,'logout']);
-Route::get('/user',[AuthController::class,'user'])->middleware('auth:api');
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/user', [AuthController::class, 'user'])->middleware('auth:api');
 
 // Product Routes
-Route::post('/addPlant',[PlantController::class,'addPlant']);
-Route::put('/updatePlant',[PlantController::class,'updatePlant']);
-Route::get('/showPlant',[PlantController::class,'showPlant']);
-Route::post('/deletePlant',[PlantController::class,'deletePlant']);
-Route::get('/allPlants',[PlantController::class,'allPlants']);
+Route::post('/addPlant', [PlantController::class, 'addPlant']);
+Route::put('/updatePlant', [PlantController::class, 'updatePlant']);
+Route::get('/showPlant', [PlantController::class, 'showPlant']);
+Route::post('/deletePlant', [PlantController::class, 'deletePlant']);
+Route::get('/allPlants', [PlantController::class, 'allPlants']);
 // plant categories and types
-Route::get('/categaries',[PlantController::class,'allPlantcategories']);
-Route::get('/types',[PlantController::class,'allPlanttypes']);
+Route::get('/categaries', [PlantController::class, 'allPlantcategories']);
+Route::get('/types', [PlantController::class, 'allPlanttypes']);
 
-Route::post('add_to_cart',[CartController::class,'add_to_cart']);
-Route::post('show_cart',[CartController::class,'show_cart']);
-Route::post('delete_from_cart',[CartController::class,'delete_from_cart']);
-Route::post('order_from_cart',[CartController::class,'order_from_cart']);
+Route::post('add_to_cart', [CartController::class, 'add_to_cart']);
+Route::get('show_cart', [CartController::class, 'show_cart']);
+Route::post('delete_from_cart', [CartController::class, 'delete_from_cart']);
+Route::post('order_from_cart', [CartController::class, 'order_from_cart']);
 
-Route::post('add_order',[OrderController::class,'add_order']);
-Route::post('view_order',[OrderController::class,'view_order']);
-Route::post('delete_order',[OrderController::class,'delete_order']);
-Route::put('update_order',[OrderController::class,'update_order']);
+Route::post('add_order', [OrderController::class, 'add_order']);
+Route::get('view_order', [OrderController::class, 'view_order']);
+Route::delete('delete_order', [OrderController::class, 'delete_order']);
+Route::put('update_order', [OrderController::class, 'update_order']);

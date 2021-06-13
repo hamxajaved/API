@@ -22,7 +22,6 @@ class PlantController extends Controller {
             'price' => 'required',
             'avatar' => 'required|mimes:jpeg,jpg,png,gif|max:3000',
             'stock' => 'required',
-            'plant_categories_id' => 'required',
             'plant_type_id' => 'required',
 
         ] );
@@ -35,7 +34,6 @@ class PlantController extends Controller {
         if ( Plant::where( 'name', $req->name )
         ->where( 'price', $req->price )
         ->where( 'avatar', $req->avatar )
-        ->where( 'plant_categories_id', $req->plant_categories_id )
         ->where( 'plant_type_id', $req->plant_type_id )->exists() ) {
 
             return response()->json( ['status' => 'error',
@@ -52,7 +50,6 @@ class PlantController extends Controller {
                 'price' => $req->price,
                 'avatar' => $imageName,
                 'stock' => $req->stock,
-                'plant_categories_id' => $req->plant_categories_id,
                 'plant_type_id' => $req->plant_type_id,
 
             ] );
@@ -72,7 +69,6 @@ class PlantController extends Controller {
             'price' => 'sometimes',
             'avatar' => 'sometimes|image:jpeg,png,jpg|max:4000',
             'stock' => 'sometimes',
-            'plant_categories_id' => 'required',
             'plant_type_id' => 'required',
 
         ] );
@@ -122,15 +118,6 @@ class PlantController extends Controller {
                     $plant->update( [
 
                         'stock' => $req->stock,
-
-                    ] );
-                }
-
-                if ( $req->plant_categories_id ) {
-
-                    $plant->update( [
-
-                        'plant_categories_id' => $req->plant_categories_id,
 
                     ] );
                 }

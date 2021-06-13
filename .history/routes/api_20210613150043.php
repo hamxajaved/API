@@ -46,7 +46,7 @@ Route::get('/categaries', [PlantController::class, 'allPlantcategories']);
 Route::get('/types', [PlantController::class, 'allPlanttypes']);
 
 Route::post('add_to_cart', [CartController::class, 'add_to_cart']);
-Route::get('show_cart', [CartController::class, 'show_cart']);
+Route::post('show_cart', [CartController::class, 'show_cart']);
 Route::post('delete_from_cart', [CartController::class, 'delete_from_cart']);
 Route::post('order_from_cart', [CartController::class, 'order_from_cart']);
 

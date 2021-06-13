@@ -22,9 +22,9 @@ class CartFactory extends Factory {
 
     public function definition() {
         return [
-            'plant_id' => 1,
-            'user_id' => 1 ,
-            'quantity'=> 10,
+            'plant_id' => mt_rand( 1, 10 ),
+            'user_id' => mt_rand( 1, 10 ),
+            'quantity'=> mt_rand( 1, 10 ),
         ];
     }
 }

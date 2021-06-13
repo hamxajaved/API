@@ -69,7 +69,7 @@ class PlantController extends Controller {
             'price' => 'sometimes',
             'avatar' => 'sometimes|image:jpeg,png,jpg|max:4000',
             'stock' => 'sometimes',
-            'plant_type_id' => 'required',
+            'plant_type_id' => 'sometimes',
 
         ] );
         if ( $validator->fails() ) {
@@ -80,8 +80,7 @@ class PlantController extends Controller {
 
             if ( Plant::where( 'id', $req->plant_id )->exists() ) {
 
-                $plant = Plant::where( 'id', $req->plant_id );
-
+                $plant = Plant::where( 'id', $req->plant_id )->first();
                 if ( $req->name ) {
 
                     $plant->update( [
@@ -130,9 +129,8 @@ class PlantController extends Controller {
 
                     ] );
                 }
-
                 return response()->json( [
-
+                    'data' => $plant,
                     'status' => 'success',
                     'message' => 'Plant Updated Successfully',
 

@@ -17,14 +17,17 @@ class AuthController extends Controller
             'name' => 'required|max:55',
             'email' => 'email|required|unique:users',
             'address' => 'required',
-            'password' => 'required|confirmed',
-            'admin' => 'boolean'
+            'password' => 'required|confirmed'
         ]);
+        if ($ValidateData) {
 
-        $ValidateData['password'] = bcrypt($ValidateData['password']);
-        $user = User::create($ValidateData);
-        $accessToken = $user->createToken('authToken')->accessToken;
-        return response(['user' => $user, 'accessToken' => $accessToken]);
+            return response()->json(['status' => 'error', 'error' => $ValidateData->errors()], 404);
+        } else {
+            $ValidateData['password'] = bcrypt($ValidateData['password']);
+            $user = User::create($ValidateData);
+            $accessToken = $user->createToken('authToken')->accessToken;
+            return response(['user' => $user, 'accessToken' => $accessToken]);
+        }
     }
 
     public function login(Request $request)

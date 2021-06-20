@@ -23,6 +23,7 @@ class PlantController extends Controller {
             'avatar' => 'required|mimes:jpeg,jpg,png,gif|max:3000',
             'stock' => 'required',
             'plant_type_id' => 'required',
+            'description' => 'string',
 
         ] );
         if ( $validator->fails() ) {
@@ -44,16 +45,16 @@ class PlantController extends Controller {
             $imageName = time().'.'.$image->extension();
             $image->move( public_path( 'plant_images' ), $imageName );
 
-            Plant::insert( [
+            $plant = Plant::insert( [
 
                 'name' => $req->name,
                 'price' => $req->price,
                 'avatar' => $imageName,
                 'stock' => $req->stock,
                 'plant_type_id' => $req->plant_type_id,
+                'description' => $req->description,
 
             ] );
-
             return response()->json( ['status' => 'success',
             'message' => 'Plant Details Added Successfully'], 200 );
 
@@ -226,7 +227,7 @@ class PlantController extends Controller {
 
     public function allPlants () {
 
-        $data = Plant::paginate( 10 );
+        $data = Plant::paginate( 20 );
 
         return response()->json( [
 

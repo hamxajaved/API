@@ -22,10 +22,6 @@ class CreateOrdersTable extends Migration
             $table->string('delivery_condition')->nullable();
             $table->string('quantity')->nullable();
             $table->string('order_status')->nullable();
-            $table->unsignedBigInteger('plant_id');
-            $table->foreign('plant_id')->references('id')->on('plants')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')
                     ->onUpdate('cascade')

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Plant;
 use App\Models\Order_product;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Collection;
 
 class OrderController extends Controller {
     //
@@ -44,11 +45,11 @@ class OrderController extends Controller {
 
                     if ( Plant::where( 'id', $plant['id'] )->exists() ) {
 
-                        $plant = Plant::where( 'id', $plant['id'] )->first();
+                        $plnt = Plant::where( 'id', $plant['id'] )->first();
                         Order_product::insert( [
 
-                            'name' => $plant->name,
-                            'price' => $plant->price,
+                            'name' => $plnt->name,
+                            'price' => $plnt->price,
                             'order_id' => $order->id,
                             'quantity' => $plant['quantity'],
                             'plant_id' => $plant['id'],
@@ -65,12 +66,11 @@ class OrderController extends Controller {
 
                 }
                 $order_plants = Order_product::where( 'order_id', $order->id )->get();
+                $order['order_plants'] = $order_plants;
                 return response()->json( [
-
                     'status' => 'success',
                     'message' => 'Order Addedd Successfully',
                     'order' => $order,
-                    'order_plants' => $order_plants,
                 ], 200 );
 
             } else {
@@ -90,7 +90,40 @@ class OrderController extends Controller {
     public function view_order ( Request $req ) {
 
         $validator = Validator::make( $req->all(), [
+            'order_id' => 'required',
+        ] );
 
+        if ( $validator->fails() ) {
+
+            return response()->json( ['status' => 'error', 'error' => $validator->errors()], 400 );
+
+        } else {
+
+            if ( Order::where( ['id' => $req->order_id, 'order_status' => 'pending'] )->exists() ) {
+                $order = Order::where( 'id', $req->order_id )->first();
+                $order_plants = Order_product::where( 'order_id', $req->order_id )->get();
+                $order['order_plants'] = $order_plants;
+                return response()->json( [
+
+                    'status' => 'success',
+                    'message' => 'Your Order Fetched Successfully',
+                    'order' => $order,
+                ], 200 );
+
+            } else {
+
+                return response()->json( [
+
+                    'status' => 'success',
+                    'message' => 'you have no pending orders...',
+                ], 200 );
+            }
+        }
+    }
+
+    public function view_all_orders ( Request $req ) {
+
+        $validator = Validator::make( $req->all(), [
             'user_id' => 'required',
         ] );
 
@@ -101,16 +134,16 @@ class OrderController extends Controller {
         } else {
 
             if ( Order::where( ['user_id' => $req->user_id, 'order_status' => 'pending'] )->exists() ) {
-
-                $order = Order::where( ['user_id' => $req->user_id, 'order_status' => 'pending'] )->get();
-                $order_plants = Order_product::where( 'order_id', $order->id )->get();
-
+                $orders = Order::where( 'user_id', $req->user_id )->get();
+                foreach ( $orders as $order ) {
+                    $order_plants = Order_product::where( 'order_id', $order->id )->get();
+                    $order['order_plants'] = $order_plants;
+                }
                 return response()->json( [
 
                     'status' => 'success',
                     'message' => 'Your Order Fetched Successfully',
-                    'order' => $order,
-                    'order_plants' => $order_plants,
+                    'orders' => $orders,
                 ], 200 );
 
             } else {

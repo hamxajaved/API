@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlantsTable extends Migration
+class CreateOrderProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,20 @@ class CreatePlantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('plants', function (Blueprint $table) {
+        Schema::create('order_products', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
             $table->string('price')->nullable();
-            $table->string('avatar')->nullable();
-            $table->string('stock')->nullable();
-            $table->string('description')->nullable();
-            $table->boolean('admin')->nullable();
-            $table->unsignedBigInteger('plant_type_id');
-            $table->foreign('plant_type_id')->references('id')->on('planttypes')
+            $table->unsignedBigInteger('plant_id');
+            $table->foreign('plant_id')->references('id')->on('plants')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-            
+            $table->unsignedBigInteger('order_id');
+            $table->foreign('order_id')->references('id')->on('orders')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+            $table->string('quantity')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -38,6 +37,6 @@ class CreatePlantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plants');
+        Schema::dropIfExists('order_products');
     }
 }

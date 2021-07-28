@@ -22,8 +22,8 @@ class PlantController extends Controller {
             'price' => 'required',
             'avatar' => 'required|mimes:jpeg,jpg,png,gif|max:3000',
             'stock' => 'required',
-            'plant_categories_id' => 'required',
             'plant_type_id' => 'required',
+            'description' => 'string',
 
         ] );
         if ( $validator->fails() ) {
@@ -35,7 +35,6 @@ class PlantController extends Controller {
         if ( Plant::where( 'name', $req->name )
         ->where( 'price', $req->price )
         ->where( 'avatar', $req->avatar )
-        ->where( 'plant_categories_id', $req->plant_categories_id )
         ->where( 'plant_type_id', $req->plant_type_id )->exists() ) {
 
             return response()->json( ['status' => 'error',
@@ -46,17 +45,16 @@ class PlantController extends Controller {
             $imageName = time().'.'.$image->extension();
             $image->move( public_path( 'plant_images' ), $imageName );
 
-            Plant::insert( [
+            $plant = Plant::insert( [
 
                 'name' => $req->name,
                 'price' => $req->price,
                 'avatar' => $imageName,
                 'stock' => $req->stock,
-                'plant_categories_id' => $req->plant_categories_id,
                 'plant_type_id' => $req->plant_type_id,
+                'description' => $req->description,
 
             ] );
-
             return response()->json( ['status' => 'success',
             'message' => 'Plant Details Added Successfully'], 200 );
 
@@ -72,8 +70,7 @@ class PlantController extends Controller {
             'price' => 'sometimes',
             'avatar' => 'sometimes|image:jpeg,png,jpg|max:4000',
             'stock' => 'sometimes',
-            'plant_categories_id' => 'required',
-            'plant_type_id' => 'required',
+            'plant_type_id' => 'sometimes',
 
         ] );
         if ( $validator->fails() ) {
@@ -84,8 +81,7 @@ class PlantController extends Controller {
 
             if ( Plant::where( 'id', $req->plant_id )->exists() ) {
 
-                $plant = Plant::where( 'id', $req->plant_id );
-
+                $plant = Plant::where( 'id', $req->plant_id )->first();
                 if ( $req->name ) {
 
                     $plant->update( [
@@ -126,15 +122,6 @@ class PlantController extends Controller {
                     ] );
                 }
 
-                if ( $req->plant_categories_id ) {
-
-                    $plant->update( [
-
-                        'plant_categories_id' => $req->plant_categories_id,
-
-                    ] );
-                }
-
                 if ( $req->plant_type_id ) {
 
                     $plant->update( [
@@ -143,9 +130,8 @@ class PlantController extends Controller {
 
                     ] );
                 }
-
                 return response()->json( [
-
+                    'data' => $plant,
                     'status' => 'success',
                     'message' => 'Plant Updated Successfully',
 
@@ -241,12 +227,12 @@ class PlantController extends Controller {
 
     public function allPlants () {
 
-        $plants = Plant::paginate( 10 );
+        $data = Plant::paginate( 20 );
 
         return response()->json( [
 
             'status' => 'success',
-            'plant' => $plants,
+            'data' => $data,
 
         ], 200 );
     }
